@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Hacker : MonoBehaviour {
@@ -11,15 +8,21 @@ public class Hacker : MonoBehaviour {
         ShowMainMenu();
     }
 
+    //game config data
+    string[] password1 = { "butt", "fart", "ass"};
+    string[] password2 = { "yes", "senator", "zucc", "sip"};
+    string[] password3 = { "sakura", "waifu", "weeaboo", "senpai", "kawaii" };
+
+
     //gamestate tings
     int level;
     enum Screen { Menu, Guess, Win };
     Screen currentScreen;
-    string Password1;
-    string Password2;
+    string password;
 
 
-    //menu ting
+
+    //show menu ting
     void ShowMainMenu()
     {
         currentScreen = Screen.Menu;
@@ -32,7 +35,7 @@ public class Hacker : MonoBehaviour {
 
     }
 
-    //iku yo
+    //input yo
     void OnUserInput(string input)
     {
         if (input == "menu")
@@ -53,72 +56,64 @@ public class Hacker : MonoBehaviour {
     //pick ur lvl
     void RunMenu(string input)
     {
-        if (input == "1")
+        bool isValidLevel = (input == "1" || input == "2" || input == "3");
+        if (isValidLevel)
         {
-            level = 1;
-            Terminal.WriteLine("grats retard");
-            StartGame(level);
+            level = int.Parse(input);
+            AskForPassword();
         }
-        else if (input == "2")
+        else if (input == "ur gay")
         {
-            level = 2;
-            Terminal.WriteLine("wow big man");
-            StartGame(level);
-        }
-        else if (input == "3")
-        {
-            level = 3;
-            Terminal.WriteLine("wew lad");
-            StartGame(level);
+            Terminal.WriteLine("no u");
         }
         else
         {
-            Terminal.WriteLine("yuo tried");
+            Terminal.WriteLine("wow u cant even do that right");
         }
     } 
 
     //geimu staato
-    void StartGame(int level)
+    void AskForPassword()
     {
         currentScreen = Screen.Guess;
-        Terminal.WriteLine("you have chosen level " + level);
+        Terminal.ClearScreen();
+        SetRandomPassword();
         Terminal.WriteLine("doko ni japanese shaman girls, lintalo?");
-        LevelSelect(level);
+        Terminal.WriteLine("enter password: " + password.Anagram());
     }
 
-    //initialize level
-    private void LevelSelect(int level)
+    private void SetRandomPassword()
     {
-        if(level == 1)
+        switch (level)
         {
-            Password1 = "poop";
-            Password2 = "butt";
-        }
-        else if(level == 2)
-        {
-            Password1 = "yes";
-            Password2 = "senator";
-        }
-        else if (level == 3)
-        {
-            Password1 = "sakura";
-            Password2 = "shit";
+            case 1:
+                password = password1[Random.Range(0, password1.Length)];
+                break;
+            case 2:
+                password = password2[Random.Range(0, password2.Length)];
+                break;
+            case 3:
+                password = password3[Random.Range(0, password3.Length)];
+                break;
+            default:
+                Debug.LogError("user is fucking retarded");
+                Terminal.WriteLine("god ur fuckin dumb");
+                break;
+
         }
     }
+
 
     //make a guess
     void Guess(string input)
     {
-        if(input == Password1)
+        if(input == password)
         {
             Win();
-        }
-        else if(input == Password2)
-        {
-            Win();
-        }
+        }       
         else
         {
+            AskForPassword();
             Terminal.WriteLine("try again moran");
         }
     }
@@ -126,11 +121,41 @@ public class Hacker : MonoBehaviour {
     //u win
     void Win()
     {
-        Terminal.WriteLine("SO SMART");
+        currentScreen = Screen.Win;
+        Terminal.ClearScreen();
+        ShowLevelReward();
     }
 
-    // Update is called once per frame
-    void Update () {
+    void ShowLevelReward()
+    {
+        switch (level)
+        {
+            case 1:
+                Terminal.WriteLine("suck a butt");
+                Terminal.WriteLine(@"
 
-	}
+       owo       
+
+"
+);
+                break;
+            case 2:
+                Terminal.WriteLine("suck 2 butts");
+                Terminal.WriteLine(@"
+
+     8====D
+");
+                break;
+            case 3:
+                Terminal.WriteLine("succemall");
+                Terminal.WriteLine(@"
+  8====D  C====8
+
+");
+                break;
+            default:
+                Debug.LogError("something is fucked");
+                break;
+        }
+    }
 }
