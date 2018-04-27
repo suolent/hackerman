@@ -1,0 +1,136 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Hacker : MonoBehaviour {
+
+    // Use this for initialization
+    void Start()
+    {
+        ShowMainMenu();
+    }
+
+    //gamestate tings
+    int level;
+    enum Screen { Menu, Guess, Win };
+    Screen currentScreen;
+    string Password1;
+    string Password2;
+
+
+    //menu ting
+    void ShowMainMenu()
+    {
+        currentScreen = Screen.Menu;
+        Terminal.ClearScreen();
+        string greeting = "welcome to incongenio";
+        Terminal.WriteLine(greeting);
+        Terminal.WriteLine("press 1 to yes");
+        Terminal.WriteLine("press 2 to senator");
+        Terminal.WriteLine("press 3 to umu");
+
+    }
+
+    //iku yo
+    void OnUserInput(string input)
+    {
+        if (input == "menu")
+        {
+            ShowMainMenu();
+        }
+        else if (currentScreen == Screen.Menu)
+        {
+            RunMenu(input);
+        }
+        else if (currentScreen == Screen.Guess)
+        {
+            Guess(input);
+        }
+
+    }
+
+    //pick ur lvl
+    void RunMenu(string input)
+    {
+        if (input == "1")
+        {
+            level = 1;
+            Terminal.WriteLine("grats retard");
+            StartGame(level);
+        }
+        else if (input == "2")
+        {
+            level = 2;
+            Terminal.WriteLine("wow big man");
+            StartGame(level);
+        }
+        else if (input == "3")
+        {
+            level = 3;
+            Terminal.WriteLine("wew lad");
+            StartGame(level);
+        }
+        else
+        {
+            Terminal.WriteLine("yuo tried");
+        }
+    } 
+
+    //geimu staato
+    void StartGame(int level)
+    {
+        currentScreen = Screen.Guess;
+        Terminal.WriteLine("you have chosen level " + level);
+        Terminal.WriteLine("doko ni japanese shaman girls, lintalo?");
+        LevelSelect(level);
+    }
+
+    //initialize level
+    private void LevelSelect(int level)
+    {
+        if(level == 1)
+        {
+            Password1 = "poop";
+            Password2 = "butt";
+        }
+        else if(level == 2)
+        {
+            Password1 = "yes";
+            Password2 = "senator";
+        }
+        else if (level == 3)
+        {
+            Password1 = "sakura";
+            Password2 = "shit";
+        }
+    }
+
+    //make a guess
+    void Guess(string input)
+    {
+        if(input == Password1)
+        {
+            Win();
+        }
+        else if(input == Password2)
+        {
+            Win();
+        }
+        else
+        {
+            Terminal.WriteLine("try again moran");
+        }
+    }
+
+    //u win
+    void Win()
+    {
+        Terminal.WriteLine("SO SMART");
+    }
+
+    // Update is called once per frame
+    void Update () {
+
+	}
+}
